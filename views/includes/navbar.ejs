@@ -1,0 +1,68 @@
+<!-- this is the navbar page -->
+ <style>
+  .search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 250px;
+  padding: 5px;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+}
+
+.search-button:hover {
+  color: #fe424d; /* Airbnb's blue accent color */
+}
+
+.search-container:focus-within {
+  border-color: #fe424d; /* Highlight when focused */
+}
+
+ </style>
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+      <div class="navbar-center navbar-nav ms-auto">
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Search" />
+          <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+      </div>
+      
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Add your Listing</a>
+        <% if (!currUser) { %>
+        <a class="nav-link" href="/signup"><b>Sign up</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } %>
+        <% if (currUser) { %>
+        <a class="nav-link" href="/logout"><b>Logout</b></a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

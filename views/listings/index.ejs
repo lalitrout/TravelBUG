@@ -1,0 +1,184 @@
+<% layout("/layouts/boilerplate") %>
+    <style>
+      #filters {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        /* gap: 10px; */
+      }
+
+      .filter {
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 0.5rem;
+        opacity: 0.7;
+      }
+
+      .filter:hover {
+        opacity: 1;
+        border-bottom: 1px solid black;
+      }
+
+      .filter p {
+        font-size: 0.8rem;
+      }
+      .tax-info {
+        display: none;
+      }
+  .tax-toggle {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px; /* Reduced padding to prevent unnecessary shrinking */
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    width: 250px; /* Fixed width */
+    height: 50px;
+    overflow: hidden; /* Prevents content overflow */
+    box-sizing: border-box; /* Includes padding in width calculation */
+  }
+  .tax-toggle:hover {
+    border: 1px solid #4d4b4b;
+  }
+
+  .form-switch {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%; /* Ensures elements inside the container use all available space */
+  }
+
+  .form-check-label {
+    font-size: 12px;
+    color: #333;
+    margin: 0;
+    padding: 0; /* Remove any inherited padding */
+    white-space: nowrap; /* Prevents wrapping of text */
+    overflow: hidden; /* Ensures no overflow of text */
+    text-overflow: ellipsis; /* Adds ellipsis if text overflows */
+    flex: 1; /* Allows the label to take all remaining space */
+  }
+
+  .form-check-input {
+    width: 30px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    border: none;
+    position: relative;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; /* Prevents the toggle switch from shrinking */
+  }
+
+  .form-check-input:checked {
+    background-color: rgb(249, 94, 94);
+  }
+
+  .form-check-input::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-check-input:checked::before {
+    transform: translateX(10px);
+  }
+</style>
+
+
+
+     <div id="filters">
+
+         <div class="filter">
+           <div><i class="fa-solid fa-fire"></i></div>
+           <p>Trending</p>
+         </div>
+   
+         <div class="filter">
+           <div><i class="fa-solid fa-bed"></i></div>
+           <p>Rooms</p>
+         </div>
+
+        <div class="filter">
+          <div><i class="fa-brands fa-fort-awesome"></i></div>
+          <p>Castles</p>
+        </div>
+        <div class="filter">
+          <div><i class="fa-solid fa-mug-hot"></i></div>
+          <p>Bed & Breakfast</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-tree-city"></i></div>
+          <p>Treehouses</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-bell-concierge"></i></div>
+          <p>Luxe</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-umbrella-beach"></i></div>
+          <p>Beachfront</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-sailboat"></i></div>
+          <p>Boats</p>
+        </div>
+
+        <div class="filter">
+          <div><i class="fa-solid fa-tents"></i></div>
+          <p>Camping</p>
+        </div>
+
+        <div class="tax-toggle">
+          <div class="form-check-reverse form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+          </div>
+        </div>
+     </div>   
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3" >
+      <% for(listing of allListings){ %>
+        <a class="card-link" href="/listings/<%= listing._id %>">
+        <div class="card col listing-card" style="width: 20rem;">
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 16rem;">
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <p class="card-text">
+              <b><%= listing.title %></b>
+              <br>
+              &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+              <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+            </p>
+          </div>
+        </div>
+        </a>
+        <% } %>
+    </div>
+
+    <script>
+      let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+      taxSwitch.addEventListener("click", () => {
+        let taxinfo = document.getElementsByClassName("tax-info");
+        for (info of taxinfo) {
+          if (info.style.display != "inline") {
+            info.style.display = "inline";
+          }else {
+          info.style.display = "none";
+          }
+        }
+      })
+    </script>

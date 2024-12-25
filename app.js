@@ -1,7 +1,7 @@
-if (process.env.NODE_ENV != "production") {
-    require('dotenv').config()   
+// Load environment variables
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
 }
-require('dotenv').config();
 
 const express = require("express");
 const app = express();
@@ -19,91 +19,99 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-const { error } = require('console');
 
-const dbUrl = process.env.ATLASDB_URL;
+// Load environment variables
+const dbUrl = process.env.ATLASDB_URL || "mongodb://localhost:27017/myLocalDB"; // Fallback for local dev
+const secret = process.env.SECRET || "defaultsecret"; // Fallback for development
 
-main()
-.then(() => {
-    console.log("connected to db");
-})
-.catch((err) => {
-    console.log(err);
-})
+// Connect to MongoDB
 async function main() {
-    await mongoose.connect(dbUrl);
-};
+    try {
+        await mongoose.connect(dbUrl);
+        console.log("Connected to MongoDB successfully");
+    } catch (err) {
+        console.error("Error connecting to MongoDB:", err);
+    }
+}
+main();
 
-app.use(express.static(path.join(__dirname ,"/public")));
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname,"views"));
-app.use(express.urlencoded({extended:true}));
-app.use(methodOverride("_method"));
+// Set up EJS and middleware
 app.engine("ejs", ejsMate);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-const store = MongoStore.create({
-    mongoUrl:dbUrl,
-    crypto: {
-        secret: process.env.SECRET
-    },
-    touchAfter: 24 * 3600,
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+
+app.use((req,res,next) => {
+    if (req.url.includes('50i1')) {
+        return res.redirect('/listings');        
+    }
+    next();
 })
 
-store.on("error", ()=>{
-    console.log("ERROR IN MONGO SESSION STORE", err);
+// Set up session with MongoStore
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: { secret },
+    touchAfter: 24 * 3600, // Time period in seconds
 });
 
-const sessionOption = {
+store.on("error", (err) => {
+    console.error("Error in Mongo Session Store:", err);
+});
+
+const sessionConfig = {
     store,
-    secret: process.env.SECRET,
+    name: "session", // Customize the session cookie name
+    secret,
     resave: false,
     saveUninitialized: true,
-    httpOnly: true,
     cookie: {
         httpOnly: true,
-        // secure: false, // Set to true if using HTTPS
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    }
+        // secure: true, // Uncomment if using HTTPS
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    },
 };
 
-// session setup
-app.use(session(sessionOption));
+app.use(session(sessionConfig));
 app.use(flash());
 
-//Passport express middleware necessary setup
+// Passport.js setup
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next) => {
+// Set up global variables for templates
+app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     next();
 });
 
+// Routes
 app.use("/listings", listings);
-//reviews
 app.use("/listings/:id/reviews", reviews);
-//users
-app.use("/",userRouter);
+app.use("/", userRouter);
 
-// app.get("/", (req,res) => {
-    // res.send("hii i am root");
-// });
-
-app.all("*" , (req,res,next) => {
-    next(new ExpressError(404 , "Page Not Found!"));
+// Handle 404 errors
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page Not Found!"));
 });
 
-app.use ((err,req,res,next) => {
-    let {statusCode=500 , message="something went wrong"} = err;
-    res.status(statusCode).render("listings/error.ejs", {message});
-    // res.status(statusCode).send(message);
+// Global error handler
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Something went wrong!";
+    res.status(statusCode).render("listings/error.ejs", { message: err.message });
 });
 
-app.listen(8080, () => {
-    console.log("app is listening");
+// Start the server
+const port = 8080;
+app.listen(port, () => {
+    console.log(`App is listening on port ${port}`);
 });

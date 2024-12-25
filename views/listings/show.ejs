@@ -53,7 +53,7 @@
         <textarea name="review[comment]" id="comment" cols="30" rows="5"  class="form-control" required></textarea>
         <div class="invalid-feedback">Please add some comments.</div>
       </div>
-      <button class="btn btn-outline-dark">Submit</button>
+      <button class="btn edit-btn">Submit</button>
     </form>
     <% } %>
     <hr>
@@ -71,7 +71,7 @@
           </div>
           <br>
           <form class="mb-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
-            <button class="btn btn-sm btn-dark">Delete</button>
+            <button class="btn btn-sm add-btn rev-btn">Delete</button>
           </form>
         </div>
         <% } %>

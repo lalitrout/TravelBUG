@@ -43,14 +43,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-
-app.use((req,res,next) => {
-    if (req.url.includes('50i1')) {
-        return res.redirect('/listings');        
-    }
-    next();
-})
-
+ 
 // Set up session with MongoStore
 const store = MongoStore.create({
     mongoUrl: dbUrl,
@@ -97,6 +90,9 @@ app.use((req, res, next) => {
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 app.use("/", userRouter);
+app.use("/",(req,res) => {
+    res.redirect("/listings");
+});
 
 // Handle 404 errors
 app.all("*", (req, res, next) => {

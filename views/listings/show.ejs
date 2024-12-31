@@ -8,7 +8,7 @@
         <H3><%= listing.title %></H3>
     </div>
 
-    <div class="card col-6 offset-2 show-card listing-card">
+    <div class="card col-8 offset-2 show-card listing-cards">
         <img src="<%= listing.image.url %>" class="card-img-top-show show-img" alt="listing_image">
         <div class="card-body">
           <p class="card-text">Owned by <b><%= listing.owner.username %></b></p>
@@ -59,19 +59,18 @@
     <hr>
     <% if(listing.reviews.length > 0) { %>
     <p><b>All Reviews</b></p>
-    <div class="row">
+    <div class="rev-contain">
       <% for(review of listing.reviews) { %>
-        <div class="card col-5 ms-3 mb-3">
+        <div class="card col-5 ms-2 mb-3">
           <div class="card-body">
             <h6 class="card-title">By <%= review.author.username %></h6>
             <p class="starability-result card-text" data-rating="<%= review.rating %>">
-              Rated: 3 stars
             </p>
             <p class="card-text"><%= review.comment %></p>
           </div>
           <br>
           <form class="mb-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
-            <button class="btn btn-sm add-btn rev-btn">Delete</button>
+            <button class="btn btn-sm add-btn rev-btn">Delete</button>  
           </form>
         </div>
         <% } %>

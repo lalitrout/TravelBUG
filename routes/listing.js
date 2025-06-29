@@ -24,6 +24,20 @@ router.route("/")
 router.get("/new", 
     isLoggedIn, listingController.renderNewForm); 
 
+// Search route
+router.get("/search", async (req, res) => {
+    const { q } = req.query;
+    if (!q) {
+        req.flash("error", "Please enter a search term.");
+        return res.redirect("/listings");
+    }
+
+    const listings = await Listing.find({
+        $text: { $search: q }
+    });
+
+    res.render("listings/index", { allListings: listings });
+});
 
 router.route("/:id")
     .get(wrapAsync (listingController.showListing))// show route
@@ -45,5 +59,7 @@ router.get("/:id/edit",
     isLoggedIn,
     isOwner,
     wrapAsync (listingController.renderEditForm));
+
+
 
 module.exports = router;

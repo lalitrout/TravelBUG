@@ -1,30 +1,36 @@
-<!-- this is the navbar page -->
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" >
+    <!-- Brand Icon -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+
+    <!-- Search bar (always visible) -->
+    <div class="search-bar-wrapper ms-auto me-2">
+      <form class="search-container" action="/listings/search" method="GET">
+        <input type="text" name="q" class="search-input" placeholder="Search" />
+        <button class="search-button" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Hamburger toggle button for collapsed navbar links -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse nav-style" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Home</a>
-      </div>
 
-      <div class="navbar-center navbar-nav ms-auto">
-        <div class="search-container">
-          <input type="text" class="search-input" placeholder="Search" />
-          <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-      </div>
-      
+    <!-- Collapsible menu items -->
+    <div class="collapse navbar-collapse nav-style" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings">Home</a>
         <a class="nav-link" href="/listings/new">Add your Listing</a>
+
         <% if (!currUser) { %>
-        <a class="nav-link" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link" href="/login"><b>Login</b></a>
-        <% } %>
-        <% if (currUser) { %>
-        <a class="nav-link" href="/logout"><b>Logout</b></a>
+          <a class="nav-link" href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } else { %>
+          <a class="nav-link" href="/logout"><b>Logout</b></a>
         <% } %>
       </div>
     </div>

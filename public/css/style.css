@@ -247,54 +247,88 @@ body {
         height: 10rem;
         width: 15rem;
     }
-    .tax-toggle, .navbar-center {
-        display: none !important;
+    .tax-toggle,  .navbar-center {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
     }
 }    
 
-@media (max-width: 1030px) {
+/* @media (max-width: 1030px) {
     .filter-extra {
         display: none !important;
     }
-}
+} */
 
 /* style for different filters just like in airbnb below navbar */
 #filters {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: space-between !important;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  scrollbar-width: none; /* For Firefox */
 }
 
-.filter {
-  text-align: center;
-  margin-right: 2rem;
-  margin-top: 0.5rem;
-  opacity: 0.7;
+#filters::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari */
 }
+
+.filter, .tax-toggle {
+  flex: 0 0 auto;
+  text-align: center;
+  opacity: 0.7;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
 .filter:hover {
   opacity: 1;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid #fe424d;
 }
+
 .filter p {
   font-size: 0.8rem;
+  margin: 0.25rem 0 0;
 }
+
+.tax-toggle {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
 
 /* tax toggler style below navbar */
 .tax-info {
   display: none;
 }
+.tax-toggle-fixed {
+  position: fixed;
+  top: 200px;
+  left: 20px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
 .tax-toggle {
-display: flex;
-align-items: center;
-padding: 4px 8px;
-border: 1px solid #ddd;
-border-radius: 20px;
-background-color: #f9f9f9;
-cursor: pointer;
-width: 250px; 
-height: 50px;
-overflow: hidden; 
-box-sizing: border-box; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  background-color: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  height: 44px;
+  width: 180px;
 }
 .tax-toggle:hover {
 border: 1px solid #4d4b4b;
@@ -347,21 +381,30 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 transform: translateX(10px);
 }
 
+/* Search container styling */
+.search-bar-wrapper {
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  flex: 1;
+}
+
 .search-container {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 5px 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .search-input {
   border: none;
   outline: none;
   font-size: 14px;
-  width: 250px;
+  width: 100%;
   padding: 5px;
 }
 
@@ -374,10 +417,25 @@ transform: translateX(10px);
 }
 
 .search-button:hover {
-  color: #fe424d; 
-}
-  
-.search-container:focus-within {
-    border-color: #fe424d; /* Highlight when focused */
+  color: #fe424d;
 }
 
+.search-container:focus-within {
+  border-color: #fe424d;
+}
+
+@media (max-width: 768px) {
+  .search-bar-wrapper {
+    max-width: 100%;
+    padding: 0.5rem 0;
+    justify-content: center;
+  }
+
+  .search-container {
+    width: 90%;
+  }
+
+  .search-input {
+    font-size: 1rem;
+  }
+}

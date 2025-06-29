@@ -21,6 +21,19 @@
      <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.1/mapbox-gl.js"></script>
 </head>
 <body>
+    <!-- Spinner -->
+<div id="loader" style="
+  position:fixed;
+  top:0;left:0;
+  width:100vw;height:100vh;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+">
+  <img src="Ball@1x-1.0s-200px-200px.gif" width="60" />
+</div>
 
     <%- include("../includes/navbar.ejs") %>
     <div class="container">
@@ -33,5 +46,12 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
     crossorigin="anonymous"></script>
     <script src="/js/script.js"></script>
+    <script>
+  window.addEventListener("load", function () {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
+  });
+</script>
+
 </body>
 </html>

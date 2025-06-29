@@ -3,43 +3,72 @@
   <div class="col-8 offset-2">
     <br><br>
     <h3>Create your listing</h3>
-    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
-        
-        <div class="mb-3">
-            <label for="title" class="form-label">Title </label>
-            <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
-            <div class="invalid-feedback">Enter a valid Title</div>
-        </div>
 
-        <div class="mb-3">
-            <label for="description" class="form-label">Description </label>
-            <textarea name="listing[description]" placeholder="description" type="text" class="form-control" required></textarea>
-            <div class="invalid-feedback">Enter a valid Description</div>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Image </label>
-            <input name="listing[image]" type="file" class="form-control" required>
-        </div>
-       <div class="row">
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+      
+      <!-- Title -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control" required>
+        <div class="invalid-feedback">Enter a valid Title</div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" placeholder="description" class="form-control" required></textarea>
+        <div class="invalid-feedback">Enter a valid Description</div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="mb-3">
+        <label for="image" class="form-label">Upload Image</label>
+        <input name="listing[image]" type="file" class="form-control" required>
+      </div>
+
+      <!-- ✅ Category Select Dropdown -->
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="listing[category]" class="form-select" required>
+          <option selected disabled value="">Choose a category</option>
+          <option value="Trending">Trending</option>
+          <option value="Rooms">Rooms</option>
+          <option value="Castles">Castles</option>
+          <option value="Bed & Breakfast">Bed & Breakfast</option>
+          <option value="Treehouses">Treehouses</option>
+          <option value="Luxe">Luxe</option>
+          <option value="Beachfront">Beachfront</option>
+          <option value="Boats">Boats</option>
+          <option value="Camping">Camping</option>
+        </select>
+        <div class="invalid-feedback">Please select a valid category</div>
+      </div>
+
+      <!-- Price + Country Row -->
+      <div class="row">
         <div class="mb-3 col-md-4">
-            <label for="price" class="form-label">Price </label>
-            <input name="listing[price]" placeholder="2000" class="form-control" required>
-            <div class="invalid-feedback">Enter a valid Price</div>
+          <label for="price" class="form-label">Price</label>
+          <input name="listing[price]" placeholder="2000" class="form-control" required>
+          <div class="invalid-feedback">Enter a valid Price</div>
         </div>
 
         <div class="mb-3 col-md-8">
-            <label for="country" class="form-label">Country </label>
-            <input name="listing[country]" placeholder="India" type="text" class="form-control" required>  
-            <div class="invalid-feedback">Enter a valid Country</div>         
+          <label for="country" class="form-label">Country</label>
+          <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
+          <div class="invalid-feedback">Enter a valid Country</div>
         </div>
-       </div>
-        <div class="mb-3">
-            <label for="location" class="form-label">Location </label>
-            <input name="listing[location]" placeholder="Jaipur,India" type="text" class="form-control" required>
-            <div class="invalid-feedback">Enter a valid Location</div>
-        </div>
-        <button class="btn btn-dark add-btn">add</button>
-        <br><br>
+      </div>
+
+      <!-- Location -->
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input name="listing[location]" placeholder="Jaipur, India" type="text" class="form-control" required>
+        <div class="invalid-feedback">Enter a valid Location</div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="btn btn-dark add-btn">Add</button>
+      <br><br>
     </form>
   </div>
 </div>

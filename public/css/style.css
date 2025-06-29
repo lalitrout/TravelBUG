@@ -24,6 +24,11 @@ body {
     align-items: center;
     padding: 0 1rem;
 }
+.brand {
+   color: #fe424d; 
+   font-size: 1rem;
+
+}
 
 .fa-compass {
     color: #fe424d;
@@ -104,7 +109,6 @@ body {
         padding: 5px !important;
         width: 3rem !important;
         background-color: white !important;
-        border: 4px solid #fe424d !important;
         border-radius: 20px;
     }
 }

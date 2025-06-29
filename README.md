@@ -1,6 +1,6 @@
-# Airbnb Clone
+# TravelBUG🐞 - Once bitten by the travel bug, there’s no cure.
 
-This project is a clone of Airbnb, built to replicate the core features of the popular online marketplace for lodging, primarily for educational purposes.
+This project is inspired from Airbnb, built to replicate the core features of the popular online marketplace for lodging, primarily for educational purposes.
 
 ---
 
